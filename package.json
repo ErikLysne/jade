@@ -1,0 +1,12 @@
+{
+  "name": "jade",
+  "version": "0.0.0",
+  "author": "Erik Lysne",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^5.5.4"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
