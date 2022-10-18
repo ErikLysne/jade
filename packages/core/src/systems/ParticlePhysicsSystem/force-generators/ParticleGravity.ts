@@ -6,17 +6,17 @@ import { ParticleForceGenerator } from '../ParticleForceGenerator';
 export class ParticleGravity implements ParticleForceGenerator {
 	#acceleration = new Vector2();
 
-	setVector(acceleration: Vector2): ParticleGravity {
+	setAccelerationVector(acceleration: Vector2): ParticleGravity {
 		this.#acceleration = acceleration;
 		return this;
 	}
 
-	set(x: number, y: number): ParticleGravity {
+	setAcceleration(x: number, y: number): ParticleGravity {
 		this.#acceleration = new Vector2(x, y);
 		return this;
 	}
 
-	get(): Vector2 {
+	getAcceleration(): Vector2 {
 		return this.#acceleration;
 	}
 
