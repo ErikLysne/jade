@@ -1,0 +1,14 @@
+{
+	"name": "@jade/core",
+	"version": "0.0.0",
+	"type": "module",
+	"types": "lib/index.d.ts",
+	"main": "lib/index.js",
+	"author": "Erik Lysne",
+	"license": "MIT",
+	"scripts": {
+		"clean": "del-cli lib",
+		"test": "jest",
+		"build": "yarn run clean && tsc --build tsconfig.build.json"
+	}
+}
