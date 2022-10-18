@@ -1,6 +1,7 @@
 import {
 	DampingComponent,
 	ForceAccumulatorComponent,
+	ForceRegistryComponent,
 	MassComponent,
 	PositionComponent,
 	VelocityComponent
@@ -12,6 +13,7 @@ export class Particle extends Entity {
 		PositionComponent,
 		VelocityComponent,
 		ForceAccumulatorComponent,
+		ForceRegistryComponent,
 		MassComponent,
 		DampingComponent
 	];
