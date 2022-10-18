@@ -14,6 +14,11 @@ export class ForceRegistryComponent extends Component {
 		return this;
 	}
 
+	clear(): ForceRegistryComponent {
+		this.#registrations = new Set();
+		return this;
+	}
+
 	set(registration: Set<ParticleForceGenerator>): ForceRegistryComponent {
 		this.#registrations = registration;
 		return this;
