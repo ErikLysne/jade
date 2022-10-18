@@ -28,7 +28,7 @@ export class Canvas {
 		this.#canvasElement.height = this.#height;
 	}
 
-	static createCanvasElement(ref: HTMLElement | null): HTMLCanvasElement {
+	static createElement(ref: HTMLElement | null): HTMLCanvasElement {
 		if (!ref) {
 			throw new Error('Failed to create canvas: ref is not defined');
 		}
