@@ -37,7 +37,12 @@ export abstract class Entity {
 	setComponent<TComponent extends Component>(
 		ComponentClass: ComponentClass<TComponent>
 	): TComponent['set'] {
-		const component = this.#components.get(ComponentClass);
+		let component = this.#components.get(ComponentClass);
+
+		if (!component) {
+			component =
+				this.addComponent(ComponentClass).getComponent(ComponentClass);
+		}
 		return (...args: any[]) => component!.set(...args);
 	}
 

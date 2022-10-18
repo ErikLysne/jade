@@ -83,6 +83,14 @@ describeEntity('function: setComponent', () => {
 
 		expect(entity.getComponent(MassComponent).get()).toEqual(100);
 	});
+
+	it('creates a new component if it does not exist', () => {
+		const entity = ecs.createEntity(TestEntity);
+
+		entity.setComponent(MassComponent)(100);
+
+		expect(entity.getComponent(MassComponent).get()).toEqual(100);
+	});
 });
 
 describeEntity('function: getComponents', () => {
