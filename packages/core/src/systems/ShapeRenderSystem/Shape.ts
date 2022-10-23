@@ -16,17 +16,17 @@ export interface ShapeOptions {
 }
 
 export abstract class Shape implements ShapeOptions {
-	fillStyle?: CanvasFillStrokeStyles['fillStyle'];
-	strokeStyle?: CanvasFillStrokeStyles['strokeStyle'];
-	lineCap?: CanvasLineCap;
-	lineDashOffset?: number;
-	lineJoin?: CanvasLineJoin;
-	lineWidth?: number;
-	miterLimit?: number;
-	shadowBlur?: number;
-	shadowColor?: string;
-	shadowOffsetX?: number;
-	shadowOffsetY?: number;
+	public fillStyle?: CanvasFillStrokeStyles['fillStyle'];
+	public strokeStyle?: CanvasFillStrokeStyles['strokeStyle'];
+	public lineCap?: CanvasLineCap;
+	public lineDashOffset?: number;
+	public lineJoin?: CanvasLineJoin;
+	public lineWidth?: number;
+	public miterLimit?: number;
+	public shadowBlur?: number;
+	public shadowColor?: string;
+	public shadowOffsetX?: number;
+	public shadowOffsetY?: number;
 
 	constructor(options: ShapeOptions) {
 		Object.assign(this, options);

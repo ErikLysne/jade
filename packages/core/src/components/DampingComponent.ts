@@ -1,14 +1,14 @@
-import { Component } from '../ecs';
+import { Component } from '../engine';
 
 export class DampingComponent extends Component {
-	#damping = 1;
+	private damping = 1;
 
-	set(damping: number): DampingComponent {
-		this.#damping = damping;
+	set(damping: number): this {
+		this.damping = damping;
 		return this;
 	}
 
 	get(): number {
-		return this.#damping;
+		return this.damping;
 	}
 }

@@ -5,16 +5,16 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../../../../components';
-import { ECS } from '../../../../ecs';
-import { Particle } from '../../../../entities';
+import { Application } from '../../../../engine';
+import { ParticleEntity } from '../../../../entities';
 import { describeClass } from '../../../../test/describeClass';
 import { ParticleBungee } from '../ParticleBungee';
 
 const describeParticleBungee = describeClass(ParticleBungee);
 
-const ecs = new ECS();
-const particle1 = ecs.createEntity(Particle);
-const particle2 = ecs.createEntity(Particle);
+const app = new Application({} as any);
+const particle1 = app.createEntity(ParticleEntity);
+const particle2 = app.createEntity(ParticleEntity);
 const springConstant = 1.0;
 const restLength = 10.0;
 const particleBungee = new ParticleBungee()

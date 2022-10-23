@@ -1,15 +1,17 @@
-import { Component } from '../ecs';
+import { Component } from '../engine';
 import { Shape } from '../systems';
 
 export class ShapeComponent extends Component {
-	#shape?: Shape = undefined;
+	private shape?: Shape = undefined;
+	private priority = 0;
 
-	get(): Shape | undefined {
-		return this.#shape;
+	get(): { shape: Shape | undefined; priority: number } {
+		return { shape: this.shape, priority: this.priority };
 	}
 
-	set(shape: Shape): ShapeComponent {
-		this.#shape = shape;
+	set(shape: Shape, priority: number = 0): this {
+		this.shape = shape;
+		this.priority = priority;
 		return this;
 	}
 }

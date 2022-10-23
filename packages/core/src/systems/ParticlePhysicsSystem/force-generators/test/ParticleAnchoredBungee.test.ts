@@ -5,16 +5,16 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../../../../components';
-import { ECS } from '../../../../ecs';
-import { Particle } from '../../../../entities';
+import { Application } from '../../../../engine';
+import { ParticleEntity } from '../../../../entities';
 import { Vector2 } from '../../../../math';
 import { describeClass } from '../../../../test/describeClass';
 import { ParticleAnchoredBungee } from '../ParticleAnchoredBungee';
 
 const describeParticleAnchoredBungee = describeClass(ParticleAnchoredBungee);
 
-const ecs = new ECS();
-const particle = ecs.createEntity(Particle);
+const app = new Application({} as any);
+const particle = app.createEntity(ParticleEntity);
 const springConstant = 1.0;
 const restLength = 10.0;
 const anchor = new Vector2(0, 30);

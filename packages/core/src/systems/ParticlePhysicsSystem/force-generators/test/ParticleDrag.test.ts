@@ -5,16 +5,16 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../../../../components';
-import { ECS } from '../../../../ecs';
-import { Particle } from '../../../../entities';
+import { Application } from '../../../../engine';
+import { ParticleEntity } from '../../../../entities';
 import { describeClass } from '../../../../test/describeClass';
 import { expectVectorToEqual } from '../../../../test/expectVector';
 import { ParticleDrag } from '../ParticleDrag';
 
 const describeParticleDrag = describeClass(ParticleDrag);
 
-const ecs = new ECS();
-const particle = ecs.createEntity(Particle);
+const app = new Application({} as any);
+const particle = app.createEntity(ParticleEntity);
 const k1 = 0.5;
 const k2 = 0.1;
 const particleDrag = new ParticleDrag().setK1(k1).setK2(k2);

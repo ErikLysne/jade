@@ -1,5 +1,4 @@
 export * from './components';
-export * from './ecs';
 export * from './engine';
 export * from './entities';
 export * from './graphics';

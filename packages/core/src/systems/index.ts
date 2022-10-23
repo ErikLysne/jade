@@ -1,2 +1,2 @@
 export * from './ParticlePhysicsSystem';
-export * from './RenderSystem';
+export * from './ShapeRenderSystem';

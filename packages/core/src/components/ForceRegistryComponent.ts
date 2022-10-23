@@ -1,30 +1,41 @@
-import { Component } from '../ecs';
+import { Component } from '../engine';
+import { Vector2 } from '../math';
 import { ParticleForceGenerator } from '../systems';
 
 export class ForceRegistryComponent extends Component {
-	#registrations = new Set<ParticleForceGenerator>();
+	private registrations = new Set<ParticleForceGenerator>();
+	private generatedForces = new Map<string, Vector2>();
 
-	add(forceGenerator: ParticleForceGenerator): ForceRegistryComponent {
-		this.#registrations.add(forceGenerator);
+	add(forceGenerator: ParticleForceGenerator): this {
+		this.registrations.add(forceGenerator);
 		return this;
 	}
 
-	remove(forceGenerator: ParticleForceGenerator): ForceRegistryComponent {
-		this.#registrations.delete(forceGenerator);
+	remove(forceGenerator: ParticleForceGenerator): this {
+		this.registrations.delete(forceGenerator);
 		return this;
 	}
 
-	clear(): ForceRegistryComponent {
-		this.#registrations = new Set();
+	clear(): this {
+		this.registrations = new Set();
 		return this;
 	}
 
-	set(registration: Set<ParticleForceGenerator>): ForceRegistryComponent {
-		this.#registrations = registration;
+	set(registration: Set<ParticleForceGenerator>): this {
+		this.registrations = registration;
 		return this;
 	}
 
 	get(): Set<ParticleForceGenerator> {
-		return this.#registrations;
+		return this.registrations;
+	}
+
+	setGeneratedForce(forceType: string, force: Vector2): this {
+		this.generatedForces.set(forceType, force);
+		return this;
+	}
+
+	getGeneratedForces(): Map<string, Vector2> {
+		return this.generatedForces;
 	}
 }

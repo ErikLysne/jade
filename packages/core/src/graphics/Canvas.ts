@@ -9,23 +9,23 @@ export interface CanvasOptions {
 }
 
 export class Canvas {
-	readonly #width: number;
-	readonly #height: number;
-	readonly #canvasElement: HTMLCanvasElement;
-	readonly #antiAliasingEnabled?: boolean;
-	readonly #ctx: CanvasRenderingContext2D;
-	#backgroundColor: string;
+	private readonly width: number;
+	private readonly height: number;
+	private readonly canvasElement: HTMLCanvasElement;
+	private readonly ctx: CanvasRenderingContext2D;
+	private readonly antiAliasingEnabled?: boolean;
+	private backgroundColor: string;
 
 	constructor(options: CanvasOptions) {
-		this.#width = options.width;
-		this.#height = options.height;
-		this.#canvasElement = options.canvasElement;
-		this.#backgroundColor = options.backgroundColor ?? '#28355d';
-		this.#antiAliasingEnabled = options.antiAliasingEnabled;
+		this.width = options.width;
+		this.height = options.height;
+		this.canvasElement = options.canvasElement;
+		this.backgroundColor = options.backgroundColor ?? '#28355d';
+		this.antiAliasingEnabled = options.antiAliasingEnabled;
 
-		this.#ctx = this.#canvasElement.getContext('2d')!;
-		this.#canvasElement.width = this.#width;
-		this.#canvasElement.height = this.#height;
+		this.ctx = this.canvasElement.getContext('2d')!;
+		this.canvasElement.width = this.width;
+		this.canvasElement.height = this.height;
 	}
 
 	static createElement(ref: HTMLElement | null): HTMLCanvasElement {
@@ -42,48 +42,48 @@ export class Canvas {
 	}
 
 	getWidth(): number {
-		return this.#width;
+		return this.width;
 	}
 
 	getHeight(): number {
-		return this.#height;
+		return this.height;
 	}
 
 	getCanvasElement(): HTMLCanvasElement {
-		return this.#canvasElement;
+		return this.canvasElement;
 	}
 
 	getCtx(): CanvasRenderingContext2D {
-		return this.#ctx;
+		return this.ctx;
 	}
 
-	setBackgroundColor(color: string): Canvas {
-		this.#backgroundColor = color;
+	setBackgroundColor(color: string): this {
+		this.backgroundColor = color;
 		return this;
 	}
 
 	getBackgroundColor(): string {
-		return this.#backgroundColor;
+		return this.backgroundColor;
 	}
 
-	clear(): Canvas {
-		this.#ctx.clearRect(0, 0, this.#width, this.#height);
+	clear(): this {
+		this.ctx.clearRect(0, 0, this.width, this.height);
 		return this;
 	}
 
-	renderBackground(): Canvas {
-		this.#ctx.save();
-		this.#ctx.fillStyle = this.#backgroundColor;
-		this.#ctx.fillRect(0, 0, this.#width, this.#height);
-		this.#ctx.restore();
+	renderBackground(): this {
+		this.ctx.save();
+		this.ctx.fillStyle = this.backgroundColor;
+		this.ctx.fillRect(0, 0, this.width, this.height);
+		this.ctx.restore();
 		return this;
 	}
 
 	worldPositionToCanvasPosition(position: Vector2): Vector2 {
-		return new Vector2(0, this.#height).add(position.flipY());
+		return new Vector2(0, this.height).add(position.flipY());
 	}
 
 	canvasPositionToWorldPosition(position: Vector2): Vector2 {
-		return new Vector2(0, this.#height).add(position.flipY());
+		return new Vector2(0, this.height).add(position.flipY());
 	}
 }

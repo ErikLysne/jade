@@ -1,1 +1,1 @@
-export { Particle } from './Particle';
+export { ParticleEntity } from './ParticleEntity';

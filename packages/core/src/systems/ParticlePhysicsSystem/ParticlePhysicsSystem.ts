@@ -6,10 +6,10 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../../components';
-import { ComponentClass, Entity, System } from '../../ecs';
+import { ComponentClass, Entity, System } from '../../engine';
 
 export class ParticlePhysicsSystem extends System {
-	requiredComponents: Set<ComponentClass> = new Set([
+	public requiredComponents: Set<ComponentClass> = new Set([
 		PositionComponent,
 		VelocityComponent,
 		ForceAccumulatorComponent,
@@ -18,7 +18,7 @@ export class ParticlePhysicsSystem extends System {
 		DampingComponent
 	]);
 
-	#integrateEntity(entity: Entity, duration: number) {
+	private integrateEntity(entity: Entity, duration: number) {
 		const position = entity.getComponent(PositionComponent);
 		const velocity = entity.getComponent(VelocityComponent);
 		const forceAccumulator = entity.getComponent(ForceAccumulatorComponent);
@@ -52,12 +52,20 @@ export class ParticlePhysicsSystem extends System {
 			for (const forceGenerator of entity
 				.getComponent(ForceRegistryComponent)
 				.get()) {
-				forceGenerator.updateForce(entity, duration);
+				const force = forceGenerator.updateForce(entity, duration);
+				if (force) {
+					entity
+						.getComponent(ForceRegistryComponent)
+						.setGeneratedForce(
+							forceGenerator.constructor.name,
+							force
+						);
+				}
 			}
 		}
 
 		for (const entity of entities) {
-			this.#integrateEntity(entity, duration);
+			this.integrateEntity(entity, duration);
 		}
 	}
 }

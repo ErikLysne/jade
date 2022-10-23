@@ -1,34 +1,34 @@
-import { Component } from '../ecs';
+import { Component } from '../engine';
 
 export class MassComponent extends Component {
-	#inverseMass = 0;
+	private inverseMass = 0;
 
-	set(mass: number): MassComponent {
+	set(mass: number): this {
 		if (mass > 0) {
-			this.#inverseMass = 1 / mass;
+			this.inverseMass = 1 / mass;
 		}
 
 		return this;
 	}
 
-	setInfinite(): MassComponent {
-		this.#inverseMass = 0;
+	setInfinite(): this {
+		this.inverseMass = 0;
 		return this;
 	}
 
 	get(): number | null {
-		if (this.#inverseMass > 0) {
-			return 1 / this.#inverseMass;
+		if (this.inverseMass > 0) {
+			return 1 / this.inverseMass;
 		}
 
 		return null;
 	}
 
 	getInverse(): number {
-		return this.#inverseMass;
+		return this.inverseMass;
 	}
 
 	isFinite(): boolean {
-		return this.#inverseMass > 0;
+		return this.inverseMass > 0;
 	}
 }

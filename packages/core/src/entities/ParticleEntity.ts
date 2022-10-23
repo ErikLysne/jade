@@ -6,15 +6,15 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../components';
-import { Entity } from '../ecs';
+import { Entity } from '../engine';
 
-export class Particle extends Entity {
-	initialComponents = [
+export class ParticleEntity extends Entity {
+	initialComponents = new Set([
 		PositionComponent,
 		VelocityComponent,
 		ForceAccumulatorComponent,
 		ForceRegistryComponent,
 		MassComponent,
 		DampingComponent
-	];
+	]);
 }

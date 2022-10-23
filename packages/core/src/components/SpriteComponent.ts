@@ -1,26 +1,26 @@
-import { Component } from '../ecs';
+import { Component } from '../engine';
 
 export class SpriteComponent extends Component {
 	#width: number = 0;
 	#height: number = 0;
 	#source: string = '';
 
-	setWidth(width: number): SpriteComponent {
+	setWidth(width: number): this {
 		this.#width = width;
 		return this;
 	}
 
-	setHeight(height: number): SpriteComponent {
+	setHeight(height: number): this {
 		this.#height = height;
 		return this;
 	}
 
-	setSource(source: string): SpriteComponent {
+	setSource(source: string): this {
 		this.#source = source;
 		return this;
 	}
 
-	set(width: number, height: number, source: string): SpriteComponent {
+	set(width: number, height: number, source: string): this {
 		this.#width = width;
 		this.#height = height;
 		this.#source = source;
