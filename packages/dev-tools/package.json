@@ -1,6 +1,6 @@
 {
 	"name": "@jade/dev-tools",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"type": "module",
 	"types": "lib/index.d.ts",
 	"main": "lib/index.js",
@@ -12,7 +12,7 @@
 		"build": "yarn run clean && tsc --build tsconfig.build.json"
 	},
 	"dependencies": {
-		"@jade/core": "*",
-		"@jade/dev-tools": "*"
+		"@jade/core": "^0.0.3",
+		"@jade/dev-tools": "^0.0.3"
 	}
 }

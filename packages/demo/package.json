@@ -1,7 +1,7 @@
 {
 	"name": "demo",
 	"private": true,
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@jade/core": "^0.0.2"
+		"@jade/core": "^0.0.3"
 	},
 	"devDependencies": {
 		"typescript": "^4.6.4",
