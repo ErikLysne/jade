@@ -4,28 +4,28 @@ import {
 	PositionComponent
 } from '../../components';
 import { describeClass } from '../../test/describeClass';
+import { Application } from '../Application';
 import { ComponentClass } from '../Component';
-import { ECS } from '../ECS';
 import { Entity } from '../Entity';
 import { System } from '../System';
 
-const describeECS = describeClass(ECS);
+const describeApplication = describeClass(Application);
 
-let ecs: ECS;
+let app: Application;
 
 beforeEach(() => {
-	ecs = new ECS();
+	app = new Application({} as any);
 });
 
-describeECS('function: createEntity', () => {
+describeApplication('function: createEntity', () => {
 	class TestEntity extends Entity {
-		initialComponents = [MassComponent, DampingComponent];
+		initialComponents = new Set([MassComponent, DampingComponent]);
 	}
 
 	it('creates an entity and sets the id, starting from 1', () => {
-		const entity1 = ecs.createEntity(TestEntity);
-		const entity2 = ecs.createEntity(TestEntity);
-		const entity3 = ecs.createEntity(TestEntity);
+		const entity1 = app.createEntity(TestEntity);
+		const entity2 = app.createEntity(TestEntity);
+		const entity3 = app.createEntity(TestEntity);
 
 		expect(entity1.id).toEqual(1);
 		expect(entity2.id).toEqual(2);
@@ -33,7 +33,7 @@ describeECS('function: createEntity', () => {
 	});
 
 	it('adds the initial components', () => {
-		const entity = ecs.createEntity(TestEntity);
+		const entity = app.createEntity(TestEntity);
 
 		expect(entity.getComponents().size).toEqual(2);
 		expect(entity.getComponent(MassComponent)).toBeDefined();
@@ -41,52 +41,43 @@ describeECS('function: createEntity', () => {
 	});
 
 	it('adds the entity to the ESC', () => {
-		const entity = ecs.createEntity(TestEntity);
+		const entity = app.createEntity(TestEntity);
 
-		expect(ecs.getEntities().includes(entity)).toBe(true);
+		expect(app.getEntities().includes(entity)).toBe(true);
 	});
 });
 
-describeECS('function: deleteEntity', () => {
+describeApplication('function: deleteEntity', () => {
 	class TestEntity extends Entity {
-		initialComponents = [];
+		initialComponents = new Set([]);
 	}
 
 	it('marks the element for deletion', () => {
-		const entity = ecs.createEntity(TestEntity);
+		const entity = app.createEntity(TestEntity);
 
-		ecs.deleteEntity(entity);
+		app.deleteEntity(entity);
 
-		expect(ecs.getEntitiesMarkedForDeletion().includes(entity)).toBe(true);
+		expect(app.getEntitiesMarkedForDeletion().includes(entity)).toBe(true);
 	});
 });
 
-describeECS('function: getEntities', () => {
+describeApplication('function: getEntities', () => {
 	class TestEntity extends Entity {
-		initialComponents = [];
+		initialComponents = new Set([]);
 	}
 
 	it('returns all entities', () => {
-		const entity1 = ecs.createEntity(TestEntity);
-		const entity2 = ecs.createEntity(TestEntity);
+		const entity1 = app.createEntity(TestEntity);
+		const entity2 = app.createEntity(TestEntity);
 
-		const entities = ecs.getEntities();
+		const entities = app.getEntities();
 
 		expect(entities.includes(entity1)).toBe(true);
 		expect(entities.includes(entity2)).toBe(true);
 	});
 });
 
-describeECS('function: createSystem', () => {
-	it('throws an error if the system does not have any required components', () => {
-		class TestSystem extends System {
-			requiredComponents = new Set<ComponentClass>();
-			update(): void {}
-		}
-
-		expect(() => ecs.createSystem(TestSystem)).toThrow();
-	});
-
+describeApplication('function: createSystem', () => {
 	it('creates the system and adds it to the ESC', () => {
 		class TestSystem extends System {
 			requiredComponents = new Set<ComponentClass>([
@@ -96,26 +87,26 @@ describeECS('function: createSystem', () => {
 			update(): void {}
 		}
 
-		const system = ecs.createSystem(TestSystem);
+		const system = app.createSystem(TestSystem);
 
-		expect(ecs.getSystems().has(system)).toBe(true);
+		expect(app.getSystems().has(system)).toBe(true);
 	});
 });
 
-describeECS('function: getSystemEntities', () => {
+describeApplication('function: getSystemEntities', () => {
 	it('returns the entities with the required components for the system', () => {
 		class TestEntity extends Entity {
-			initialComponents = [];
+			initialComponents = new Set([]);
 		}
 
-		const entity1 = ecs.createEntity(TestEntity);
-		const entity2 = ecs
+		const entity1 = app.createEntity(TestEntity);
+		const entity2 = app
 			.createEntity(TestEntity)
 			.addComponents([MassComponent]);
-		const entity3 = ecs
+		const entity3 = app
 			.createEntity(TestEntity)
 			.addComponents([MassComponent, DampingComponent]);
-		const entity4 = ecs
+		const entity4 = app
 			.createEntity(TestEntity)
 			.addComponents([
 				MassComponent,
@@ -131,8 +122,8 @@ describeECS('function: getSystemEntities', () => {
 			update(): void {}
 		}
 
-		const system = ecs.createSystem(TestSystem);
-		const systemEntities = ecs.getSystemEntities(system)!;
+		const system = app.createSystem(TestSystem);
+		const systemEntities = app.getSystemEntities(system)!;
 
 		expect(systemEntities.includes(entity1)).toBe(false);
 		expect(systemEntities.includes(entity2)).toBe(false);

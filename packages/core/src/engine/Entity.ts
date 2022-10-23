@@ -2,42 +2,42 @@ import { Component, ComponentClass } from './Component';
 
 export abstract class Entity {
 	readonly id: number;
-	readonly #components = new Map<ComponentClass, Component>();
+	private readonly components = new Map<ComponentClass, Component>();
 
 	static isExternalConstruction = false;
 
 	constructor(id: number) {
 		if (!Entity.isExternalConstruction) {
 			throw new TypeError(
-				`Class ${this.constructor.name} cannot be constructed directly. To create a new Entity, use the createEntity method on ESC.`
+				`Class ${this.constructor.name} cannot be constructed directly. To create a new Entity, use the createEntity method on Application.`
 			);
 		}
 		this.id = id;
 	}
 
-	abstract initialComponents: ComponentClass[];
+	abstract initialComponents: Set<ComponentClass>;
 
-	addComponent(ComponentClass: ComponentClass): Entity {
-		this.#components.set(ComponentClass, new ComponentClass());
+	addComponent(ComponentClass: ComponentClass): this {
+		this.components.set(ComponentClass, new ComponentClass());
 		return this;
 	}
 
-	addComponents(ComponentClasses: Iterable<ComponentClass>): Entity {
+	addComponents(ComponentClasses: Iterable<ComponentClass>): this {
 		for (const ComponentClass of ComponentClasses) {
-			this.#components.set(ComponentClass, new ComponentClass());
+			this.components.set(ComponentClass, new ComponentClass());
 		}
 		return this;
 	}
 
-	deleteComponent(ComponentClass: ComponentClass): Entity {
-		this.#components.delete(ComponentClass);
+	removeComponent(ComponentClass: ComponentClass): this {
+		this.components.delete(ComponentClass);
 		return this;
 	}
 
 	setComponent<TComponent extends Component>(
 		ComponentClass: ComponentClass<TComponent>
 	): TComponent['set'] {
-		let component = this.#components.get(ComponentClass);
+		let component = this.components.get(ComponentClass);
 
 		if (!component) {
 			component =
@@ -49,22 +49,22 @@ export abstract class Entity {
 	getComponent<TComponent extends Component>(
 		ComponentClass: ComponentClass<TComponent>
 	): TComponent {
-		return this.#components.get(ComponentClass) as TComponent;
+		return this.components.get(ComponentClass) as TComponent;
 	}
 
 	getComponents(): Map<Function, Component> {
-		return this.#components;
+		return this.components;
 	}
 
 	hasComponent<TComponent extends Component>(
 		ComponentClass: ComponentClass<TComponent>
 	): boolean {
-		return this.#components.has(ComponentClass);
+		return this.components.has(ComponentClass);
 	}
 
 	hasAllComponents(ComponentClasses: Iterable<ComponentClass>): boolean {
 		for (const ComponentClass of ComponentClasses) {
-			if (!this.#components.has(ComponentClass)) {
+			if (!this.components.has(ComponentClass)) {
 				return false;
 			}
 		}
