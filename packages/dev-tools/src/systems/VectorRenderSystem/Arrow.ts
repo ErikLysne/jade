@@ -1,23 +1,25 @@
-import { Canvas, Shape, Vector2 } from '@jade/core';
-import { ShapeOptions } from '@jade/core/lib/systems/ShapeRenderSystem/Shape';
+import { Canvas, Shape, ShapeRenderOptions, Vector2 } from '@jade/core';
 
 export class Arrow extends Shape {
 	private readonly direction: Vector2;
 	private readonly length: number;
 	private readonly text?: string;
 
-	constructor(
-		options: {
-			direction: Vector2;
-			length: number;
-			text?: string;
-		} & ShapeOptions
-	) {
-		const { direction, length, text, ...rest } = options;
-		super(rest);
+	constructor(options: {
+		direction: Vector2;
+		length: number;
+		text?: string;
+		renderOptions?: ShapeRenderOptions;
+	}) {
+		const { direction, length, text, renderOptions } = options;
+		super(renderOptions || {});
 		this.direction = direction;
 		this.length = length;
 		this.text = text;
+	}
+
+	isWithin(position: Vector2): boolean {
+		return false;
 	}
 
 	render(canvas: Canvas, position: Vector2): void {

@@ -14,7 +14,7 @@ interface ProfilerSystemValues {
 type ProfilerSystemMetrics = 'elapsedTime' | 'remainingTime';
 
 export class ProfilerSystem extends RenderSystem {
-	requiredComponents: Set<ComponentClass> = new Set([]);
+	requiredComponents = new Set<ComponentClass>([]);
 
 	private metricsNumIterations = 1000;
 	readonly updateSystemsPhaseMetrics: Record<

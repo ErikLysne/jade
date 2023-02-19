@@ -1,20 +1,15 @@
 import {
-	Component,
-	ComponentClass,
 	Entity,
 	ForceRegistryComponent,
 	PositionComponent,
-	ShapeOptions
+	ShapeRenderOptions
 } from '@jade/core';
 import { VectorRenderSystem } from './VectorRenderSystem';
 
 export class ForceRenderSystem extends VectorRenderSystem {
-	requiredComponents: Set<ComponentClass<Component>> = new Set([
-		PositionComponent,
-		ForceRegistryComponent
-	]);
+	requiredComponents = new Set([PositionComponent, ForceRegistryComponent]);
 
-	protected arrowOptions: ShapeOptions = {
+	protected arrowOptions: ShapeRenderOptions = {
 		strokeStyle: '#B33951',
 		lineWidth: 3
 	};

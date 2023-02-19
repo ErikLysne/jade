@@ -1,9 +1,9 @@
-import { Canvas, RenderSystem, ShapeOptions, Vector2 } from '@jade/core';
+import { Canvas, RenderSystem, ShapeRenderOptions, Vector2 } from '@jade/core';
 import { Arrow } from './Arrow';
 
 export abstract class VectorRenderSystem extends RenderSystem {
 	protected arrowLength = 30;
-	protected arrowOptions: ShapeOptions = {};
+	protected arrowOptions: ShapeRenderOptions = {};
 	protected renderPriority = 0;
 
 	setArrowLength(length: number): this {
@@ -15,12 +15,12 @@ export abstract class VectorRenderSystem extends RenderSystem {
 		return this.arrowLength;
 	}
 
-	setArrowOptions(options: ShapeOptions): this {
+	setArrowOptions(options: ShapeRenderOptions): this {
 		this.arrowOptions = options;
 		return this;
 	}
 
-	getArrowOptions(): ShapeOptions {
+	getArrowOptions(): ShapeRenderOptions {
 		return this.arrowOptions;
 	}
 
@@ -34,7 +34,7 @@ export abstract class VectorRenderSystem extends RenderSystem {
 			direction: vector,
 			length: this.arrowLength,
 			text: text,
-			...this.arrowOptions
+			renderOptions: this.arrowOptions
 		}).render(canvas, position);
 	}
 }
