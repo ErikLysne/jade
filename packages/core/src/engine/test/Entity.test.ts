@@ -29,13 +29,15 @@ describe('constructor', () => {
 
 describeEntity('function: addComponent', () => {
 	it('adds the component to the component map', () => {
-		const entity = app.createEntity(TestEntity).addComponent(MassComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
 
 		expect(entity.hasComponent(MassComponent));
 	});
 
 	it('updates the component if it already exists', () => {
-		const entity = app.createEntity(TestEntity).addComponent(MassComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
 		let mass = entity.getComponent(MassComponent).set(10.0);
 
 		expect(mass.get()).toEqual(10.0);
@@ -95,10 +97,9 @@ describeEntity('function: setComponent', () => {
 
 describeEntity('function: getComponents', () => {
 	it('returns all the components on the entity', () => {
-		const entity = app
-			.createEntity(TestEntity)
-			.addComponent(MassComponent)
-			.addComponent(DampingComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
+		entity.addComponent(DampingComponent);
 
 		const components = entity.getComponents();
 
@@ -115,7 +116,8 @@ describeEntity('function: getComponent', () => {
 	});
 
 	it('returns the component if it exists on the entity', () => {
-		const entity = app.createEntity(TestEntity).addComponent(MassComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
 
 		expect(entity.getComponent(MassComponent)).toBeDefined();
 	});
@@ -129,7 +131,8 @@ describeEntity('function: hasComponent', () => {
 	});
 
 	it('returns true if the entity has the component', () => {
-		const entity = app.createEntity(TestEntity).addComponent(MassComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
 
 		expect(entity.hasComponent(MassComponent)).toBe(true);
 	});
@@ -137,7 +140,8 @@ describeEntity('function: hasComponent', () => {
 
 describeEntity('function: hasAllComponents', () => {
 	it('returns false if the entity does not have all the components', () => {
-		const entity = app.createEntity(TestEntity).addComponent(MassComponent);
+		const entity = app.createEntity(TestEntity);
+		entity.addComponent(MassComponent);
 
 		expect(entity.hasAllComponents([MassComponent, DampingComponent])).toBe(
 			false

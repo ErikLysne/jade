@@ -1,3 +1,4 @@
+import { Vector2 } from '../math';
 import { Component, ComponentClass } from './Component';
 
 export abstract class Entity {
@@ -16,10 +17,15 @@ export abstract class Entity {
 	}
 
 	abstract initialComponents: Set<ComponentClass>;
+	onEntityCreated?(): void;
+	onClick?(mousePosition: Vector2): void;
 
-	addComponent(ComponentClass: ComponentClass): this {
-		this.components.set(ComponentClass, new ComponentClass());
-		return this;
+	addComponent<TComponent extends Component>(
+		ComponentClass: ComponentClass<TComponent>
+	): TComponent {
+		const component = new ComponentClass();
+		this.components.set(ComponentClass, component);
+		return component;
 	}
 
 	addComponents(ComponentClasses: Iterable<ComponentClass>): this {
@@ -40,8 +46,7 @@ export abstract class Entity {
 		let component = this.components.get(ComponentClass);
 
 		if (!component) {
-			component =
-				this.addComponent(ComponentClass).getComponent(ComponentClass);
+			component = this.addComponent(ComponentClass);
 		}
 		return (...args: any[]) => component!.set(...args);
 	}
