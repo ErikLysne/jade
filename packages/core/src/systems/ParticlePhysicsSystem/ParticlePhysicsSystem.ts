@@ -6,10 +6,10 @@ import {
 	PositionComponent,
 	VelocityComponent
 } from '../../components';
-import { ComponentClass, Entity, System } from '../../engine';
+import { Entity, System } from '../../engine';
 
 export class ParticlePhysicsSystem extends System {
-	public requiredComponents: Set<ComponentClass> = new Set([
+	public requiredComponents = new Set([
 		PositionComponent,
 		VelocityComponent,
 		ForceAccumulatorComponent,

@@ -58,6 +58,10 @@ export class Application {
 		this.canvas = canvas;
 	}
 
+	getCanvas() {
+		return this.canvas;
+	}
+
 	// Engine
 	simulationLoop(duration: number): void {
 		if (!this.isRunning) {
@@ -112,6 +116,8 @@ export class Application {
 		const entity = new EntityClass(this.nextEntityId++);
 		Entity.isExternalConstruction = false;
 
+		entity.onEntityCreated?.();
+
 		for (const Component of entity.initialComponents) {
 			entity.addComponent(Component);
 		}
@@ -141,9 +147,7 @@ export class Application {
 		const system = new SystemClass(this, this.canvas);
 		System.isExternalConstruction = false;
 
-		if (system.onSystemCreated) {
-			system.onSystemCreated();
-		}
+		system.onSystemCreated?.();
 
 		if (system instanceof RenderSystem) {
 			this.renderSystems.add(system);
