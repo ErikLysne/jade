@@ -1,7 +1,7 @@
-import { Canvas } from '../../graphics';
-import { Vector2 } from '../../math';
+import { Canvas } from '../graphics';
+import { Vector2 } from '../math';
 
-export interface ShapeOptions {
+export interface ShapeRenderOptions {
 	fillStyle?: CanvasFillStrokeStyles['fillStyle'];
 	strokeStyle?: CanvasFillStrokeStyles['strokeStyle'];
 	lineCap?: CanvasLineCap;
@@ -15,7 +15,7 @@ export interface ShapeOptions {
 	shadowOffsetY?: number;
 }
 
-export abstract class Shape implements ShapeOptions {
+export abstract class Shape implements ShapeRenderOptions {
 	public fillStyle?: CanvasFillStrokeStyles['fillStyle'];
 	public strokeStyle?: CanvasFillStrokeStyles['strokeStyle'];
 	public lineCap?: CanvasLineCap;
@@ -28,17 +28,22 @@ export abstract class Shape implements ShapeOptions {
 	public shadowOffsetX?: number;
 	public shadowOffsetY?: number;
 
-	constructor(options: ShapeOptions) {
+	constructor(options: ShapeRenderOptions) {
 		Object.assign(this, options);
 	}
 
+	abstract isWithin(position: Vector2): boolean;
 	abstract render(canvas: Canvas, position: Vector2): void;
 
-	applyStyle(ctx: CanvasRenderingContext2D, key: keyof ShapeOptions): void {
+	applyStyle(
+		ctx: CanvasRenderingContext2D,
+		key: keyof ShapeRenderOptions
+	): void {
 		if (this[key] != null) {
 			(ctx[key] as Shape[keyof Shape]) = this[key];
 		}
 	}
+
 	applyStyles(ctx: CanvasRenderingContext2D): void {
 		this.applyStyle(ctx, 'fillStyle');
 		this.applyStyle(ctx, 'strokeStyle');
