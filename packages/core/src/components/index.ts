@@ -1,3 +1,4 @@
+export { ClickableComponent } from './ClickableComponent';
 export { DampingComponent } from './DampingComponent';
 export { ForceAccumulatorComponent } from './ForceAccumulatorComponent';
 export { ForceRegistryComponent } from './ForceRegistryComponent';
